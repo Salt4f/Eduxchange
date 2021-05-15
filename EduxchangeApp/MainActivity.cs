@@ -36,11 +36,11 @@ namespace EduxchangeApp
                 case Resource.Id.navigation_home:
                     textMessage.SetText(Resource.String.title_home);
                     return true;
-                case Resource.Id.navigation_dashboard:
-                    textMessage.SetText(Resource.String.title_dashboard);
+                case Resource.Id.navigation_world:
+                    textMessage.SetText(Resource.String.title_world);
                     return true;
-                case Resource.Id.navigation_notifications:
-                    textMessage.SetText(Resource.String.title_notifications);
+                case Resource.Id.navigation_profile:
+                    textMessage.SetText(Resource.String.title_profile);
                     return true;
             }
             return false;
