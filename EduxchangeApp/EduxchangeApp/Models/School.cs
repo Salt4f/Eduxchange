@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EduxchangeApp.Models
 {
-    public class School
+    public class School : User
     {
         public string Address { get; set; }
 

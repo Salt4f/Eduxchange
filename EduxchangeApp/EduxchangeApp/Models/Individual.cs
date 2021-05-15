@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EduxchangeApp.Models
 {
-    public class Individual
+    public class Individual : User
     {
         public ICollection<Helps> Helps { get; set; }
     }
