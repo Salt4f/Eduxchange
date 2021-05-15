@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EduxchangeAPI.Data;
 using EduxchangeAPI.Models;
+using Microsoft.Extensions.Logging;
 
 namespace EduxchangeAPI.Controllers
 {
@@ -15,10 +16,12 @@ namespace EduxchangeAPI.Controllers
     public class GivesController : ControllerBase
     {
         private readonly DatabaseContext _context;
+        private readonly ILogger<GivesController> _logger;
 
-        public GivesController(DatabaseContext context)
+        public GivesController(DatabaseContext context, ILogger<GivesController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: api/Gives
@@ -89,12 +92,14 @@ namespace EduxchangeAPI.Controllers
         // POST: api/Gives
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Give>> PostGive(Give give)
+        public async Task<ActionResult<Give>> PostGive(string give)
         {
-            _context.Gives.Add(give);
-            await _context.SaveChangesAsync();
+            //_context.Gives.Add(give);
+            //await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetGive", new { id = give.Id }, give);
+            _logger.LogInformation(give);
+
+            return Ok();// CreatedAtAction("GetGive", new { id = give.Id }, give);
         }
 
         // DELETE: api/Gives/5
