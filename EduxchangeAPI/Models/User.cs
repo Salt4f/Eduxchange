@@ -23,7 +23,7 @@ namespace EduxchangeAPI.Models
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [DataType(DataType.DateTime)]
-        public DateTime DateCreated { get; set; }
+        public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 
         public ICollection<Give> Gives { get; set; }
 
