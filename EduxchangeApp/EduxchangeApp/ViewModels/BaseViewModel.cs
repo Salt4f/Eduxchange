@@ -10,7 +10,8 @@ namespace EduxchangeApp.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+        public IDataStore<Give> DataStoreGive => DependencyService.Get<IDataStore<Give>>();
+        public IDataStore<Need> DataStoreNeed => DependencyService.Get<IDataStore<Need>>();
 
         bool isBusy = false;
         public bool IsBusy
