@@ -23,15 +23,19 @@ namespace EduxchangeAPI.Controllers
 
         // GET: api/Needs
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Need>>> GetNeeds([FromQuery(Name = "old")] int? old)
+        public async Task<ActionResult<IEnumerable<Need>>> GetNeeds([FromQuery(Name = "fullfilled")] bool? fulfilled)
         {
-            if (old != null)
+            if (fulfilled != null)
             {
-                var date = DateTime.Today.AddDays(-old.Value);
-                return await _context.Needs.Where(n => n.DateCreated > date).ToListAsync();
+                return await _context.Needs
+                    .Where(n => n.Fulfilled == fulfilled)
+                    .Include(n => n.Author)
+                    .ToListAsync();
             }
 
-            return await _context.Needs.ToListAsync();
+            return await _context.Needs
+                .Include(n => n.Author)
+                .ToListAsync();
         }
 
         // GET: api/Needs/5
