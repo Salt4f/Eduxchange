@@ -42,7 +42,10 @@ namespace EduxchangeAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Give>> GetGive(long id)
         {
-            var give = await _context.Gives.FindAsync(id);
+            var give = await _context.Gives
+                .Include(g => g.Author)
+                .Include(g => g.Beneficiary)
+                .FirstOrDefaultAsync(g => g.Id == id);
 
             if (give == null)
             {

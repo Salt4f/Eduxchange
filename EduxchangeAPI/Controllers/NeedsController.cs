@@ -45,7 +45,10 @@ namespace EduxchangeAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Need>> GetNeed(long id)
         {
-            var need = await _context.Needs.FindAsync(id);
+            var need = await _context.Needs
+                .Include(n => n.Author)
+                .Include(n => n.Helps)
+                .FirstOrDefaultAsync(n => n.Id == id);
 
             if (need == null)
             {

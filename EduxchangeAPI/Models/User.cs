@@ -25,6 +25,8 @@ namespace EduxchangeAPI.Models
         [DataType(DataType.DateTime)]
         public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 
+        public string Type { get; set; }
+
         public ICollection<Give> Gives { get; set; }
 
     }
