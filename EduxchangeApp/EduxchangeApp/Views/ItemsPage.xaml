@@ -22,15 +22,17 @@
         <Grid ColumnSpacing="0" RowSpacing="0" Grid.Row="0">
             <Button 
                 Text="Give"
+                Command="{Binding LoadGivePublications}"
                 Grid.Column="0"/>
             <Button 
                 Text="Need"
+                Command="{Binding LoadNeedPublications}"
                 Grid.Column="1"/>
         </Grid>
 
         <RefreshView x:DataType="local:ItemsViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}" Grid.Row="1">
             <CollectionView x:Name="ItemsListView"
-                    ItemsSource="{Binding Items}"
+                    ItemsSource="{Binding Publications}"
                     SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
