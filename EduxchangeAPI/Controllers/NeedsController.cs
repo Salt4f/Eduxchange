@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EduxchangeAPI.Data;
 using EduxchangeAPI.Models;
+using Microsoft.Extensions.Logging;
 
 namespace EduxchangeAPI.Controllers
 {
@@ -15,15 +16,17 @@ namespace EduxchangeAPI.Controllers
     public class NeedsController : ControllerBase
     {
         private readonly DatabaseContext _context;
+        private readonly ILogger<NeedsController> _logger;
 
-        public NeedsController(DatabaseContext context)
+        public NeedsController(DatabaseContext context, ILogger<NeedsController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: api/Needs
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Need>>> GetNeeds([FromQuery(Name = "fullfilled")] bool? fulfilled)
+        public async Task<ActionResult<IEnumerable<Need>>> GetNeeds([FromQuery(Name = "fulfilled")] bool? fulfilled)
         {
             if (fulfilled != null)
             {
