@@ -1,0 +1,33 @@
+﻿version: "3"
+services:
+  api:
+    container_name: "web_api"
+    build: ./EduxchangeAPI
+    environment:
+      - "PGUSER=root"
+      - "PGHOST=pg"
+      - "PGPASSWORD=root_password"
+      - "PGDATABASE=db"
+      - "PGPORT=5432"
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on: 
+      - "pg"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+  pg:
+    image: "postgres:12"
+    container_name: "pgsql"
+    environment:
+      - "POSTGRES_PASSWORD=root_password"
+      - "POSTGRES_USER=root"
+      - "POSTGRES_DB=webapp"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pg/db_data:/var/lib/postgresql/data
