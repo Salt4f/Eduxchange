@@ -40,7 +40,7 @@ namespace EduxchangeApp.ViewModels
         }
 
         public async void LoadItemId(string itemId)
-        {
+        {/*
             try
             {
                 var item = await DataStore.GetItemAsync(itemId);
@@ -52,6 +52,7 @@ namespace EduxchangeApp.ViewModels
             {
                 Debug.WriteLine("Failed to Load Item");
             }
+            */
         }
     }
 }
