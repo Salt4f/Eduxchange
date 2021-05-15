@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace EduxchangeApp.Services
 {
-    public class MockDataStoreGive : IDataStore<Give>
+    public class MockDataStoreSchool : IDataStore<Give>
     {
-        readonly List<Give> gives;
+        private List<Give> gives;
 
-        public MockDataStoreGive()
+        public MockDataStoreSchool()
         {
             Individual author = new Individual() { Name = "Pepito", Email = "mail@email.com", DateCreated = DateTime.UtcNow };
 

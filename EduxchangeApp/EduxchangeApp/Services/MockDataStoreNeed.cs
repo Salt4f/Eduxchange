@@ -1,65 +1,80 @@
-﻿using System;
+﻿using EduxchangeApp.Models;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
-using EduxchangeApp.Models;
-using Newtonsoft.Json;
 
 namespace EduxchangeApp.Services
 {
-    class NeedDataStore : IDataStore<Need>
+    public class MockDataStoreNeed : IDataStore<Need>
     {
-        private readonly HttpClient _client;
-        //private readonly JsonSerializer _json;
+        private List<Need> needs;
 
-        private static readonly string queryBase = "http://edu.vgafib.org/api/Needs";
-
-        public NeedDataStore()
+        public MockDataStoreNeed()
         {
-            _client = HttpClientProvider.GetHttpClient();
-            //_json = JsonSerializer.CreateDefault();
+            School author = new School() { Name = "IES SEI", Email = "ies@email.com", DateCreated = DateTime.UtcNow };
+
+            needs = new List<Need>()
+            {
+                new Need { Author = author, Id = 1, AmountNeeded = 1, Title = "First item", Description="This is an item description.", Deadline=DateTime.MinValue },
+                new Need { Author = author, Id = 2, AmountNeeded = 10, Title = "Second item", Description="This is an item description.", Deadline=new DateTime(2021, 11, 20) },
+                new Need { Author = author, Id = 3, AmountNeeded = 5, Title = "Third item", Description="This is an item description.", Deadline=new DateTime(2022, 5, 20) },
+                new Need { Author = author, Id = 4, AmountNeeded = 70, Title = "Fourth item", Description="This is an item description.", Deadline=new DateTime(2021, 7, 5) },
+                new Need { Author = author, Id = 5, AmountNeeded = 15, Title = "Fifth item", Description="This is an item description.", Deadline=new DateTime(2021, 6, 12) },
+                new Need { Author = author, Id = 6, AmountNeeded = 2, Title = "Sixth item", Description="This is an item description.", Deadline=new DateTime(2019, 8, 8) }
+            };
         }
 
         public async Task<bool> AddItemAsync(Need item)
         {
-            string json = JsonConvert.SerializeObject(item);
-            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+            needs.Add(item);
 
-            var response = await _client.PostAsync(queryBase, content);
+            /*
+            var json = new JObject();
+            json.Add("Title", item.Title);
+            json.Add("Description", item.Description);
+            json.Add("Amount", item.Amount);
+            json.Add("Author", item.Author.Email);
+            json.Add("Beneficiary", item.Beneficiary.Email);
+            json.Add("Deadline", item.Deadline);
+            json.Add("Fulfilled", item.Fulfilled);
+            json.Add("Photo", item.Photo);
+            var tags = new JArray();
+            foreach (var tag in item.Tags)
+            {
+                tags.Add(tag);
+            }
+            json.Add("Tags", tags);*/
 
-            return response.IsSuccessStatusCode;
+            return await Task.FromResult(true);
+        }
+
+        public async Task<bool> UpdateItemAsync(Need give)
+        {
+            var oldItem = needs.Where((Need arg) => arg.Id == give.Id).FirstOrDefault();
+            needs.Remove(oldItem);
+            needs.Add(give);
+
+            return await Task.FromResult(true);
         }
 
         public async Task<bool> DeleteItemAsync(string id)
         {
-            return (await _client.DeleteAsync(queryBase + "/" + id)).IsSuccessStatusCode;
+            var oldItem = needs.Where((Need arg) => arg.Id.ToString() == id).FirstOrDefault();
+            needs.Remove(oldItem);
+
+            return await Task.FromResult(true);
         }
 
         public async Task<Need> GetItemAsync(string id)
         {
-            var response = await _client.GetAsync(queryBase + "/" + id);
-            response.EnsureSuccessStatusCode();
-
-            return JsonConvert.DeserializeObject<Need>(await response.Content.ReadAsStringAsync());
+            return await Task.FromResult(needs.FirstOrDefault(s => s.Id.ToString() == id));
         }
 
         public async Task<IEnumerable<Need>> GetItemsAsync(bool forceRefresh = false)
         {
-            var response = await _client.GetAsync(queryBase);
-            response.EnsureSuccessStatusCode();
-
-            return JsonConvert.DeserializeObject<IEnumerable<Need>>(await response.Content.ReadAsStringAsync());
-        }
-
-        public async Task<bool> UpdateItemAsync(Need item)
-        {
-            string json = JsonConvert.SerializeObject(item);
-            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            var response = await _client.PutAsync(queryBase + "/" + item.Id.ToString(), content);
-
-            return response.IsSuccessStatusCode;
+            return await Task.FromResult(needs);
         }
     }
 }
