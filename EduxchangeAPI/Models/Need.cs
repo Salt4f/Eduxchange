@@ -15,6 +15,8 @@ namespace EduxchangeAPI.Models
 
         public int ValuePerProduct { get; set; }
 
+        public School Author { get; set; }
+
         public ICollection<Helps> Helps { get; set; }
 
     }
