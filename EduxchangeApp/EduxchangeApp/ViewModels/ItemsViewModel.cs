@@ -38,6 +38,8 @@ namespace EduxchangeApp.ViewModels
         {
             IsBusy = true;
 
+            System.Console.WriteLine("NEEDS");
+
             try
             {
                 Publications.Clear();
@@ -60,7 +62,7 @@ namespace EduxchangeApp.ViewModels
         async Task ExecuteLoadGivesCommand()
         {
             IsBusy = true;
-
+            System.Console.WriteLine("GIVES");
             try
             {
                 Publications.Clear();
