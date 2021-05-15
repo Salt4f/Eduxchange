@@ -7,68 +7,65 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EduxchangeAPI.Data;
 using EduxchangeAPI.Models;
-using Microsoft.Extensions.Logging;
 
 namespace EduxchangeAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class NeedsController : ControllerBase
+    public class GivesController : ControllerBase
     {
         private readonly DatabaseContext _context;
-        private readonly ILogger<NeedsController> _logger;
 
-        public NeedsController(DatabaseContext context, ILogger<NeedsController> logger)
+        public GivesController(DatabaseContext context)
         {
             _context = context;
-            _logger = logger;
         }
 
-        // GET: api/Needs
+        // GET: api/Gives
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Need>>> GetNeeds([FromQuery(Name = "fulfilled")] bool? fulfilled)
+        public async Task<ActionResult<IEnumerable<Give>>> GetGives([FromQuery(Name = "fulfilled")] bool? fulfilled)
         {
             if (fulfilled != null)
             {
-                return await _context.Needs
+                return await _context.Gives
                     .Where(n => n.Fulfilled == fulfilled)
                     .Include(n => n.Author)
                     .ToListAsync();
             }
 
-            return await _context.Needs
+            return await _context.Gives
                 .Include(n => n.Author)
                 .ToListAsync();
         }
 
-        // GET: api/Needs/5
+        // GET: api/Gives/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Need>> GetNeed(long id)
+        public async Task<ActionResult<Give>> GetGive(long id)
         {
-            var need = await _context.Needs
-                .Include(n => n.Author)
-                .Include(n => n.Helps)
-                .FirstOrDefaultAsync(n => n.Id == id);
+            var give = await _context.Gives
+                .Include(g => g.Author)
+                .Include(g => g.Beneficiary)
+                .FirstOrDefaultAsync(g => g.Id == id);
 
-            if (need == null)
+            if (give == null)
             {
                 return NotFound();
             }
 
-            return need;
+            return give;
         }
 
-        // PUT: api/Needs/5
+        // PUT: api/Gives/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutNeed(long id, Need need)
+        public async Task<IActionResult> PutGive(long id, Give give)
         {
-            if (id != need.Id)
+            if (id != give.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(need).State = EntityState.Modified;
+            _context.Entry(give).State = EntityState.Modified;
 
             try
             {
@@ -76,7 +73,7 @@ namespace EduxchangeAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!NeedExists(id))
+                if (!GiveExists(id))
                 {
                     return NotFound();
                 }
@@ -89,36 +86,36 @@ namespace EduxchangeAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Needs
+        // POST: api/Gives
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Need>> PostNeed(Need need)
+        public async Task<ActionResult<Give>> PostGive(Give give)
         {
-            _context.Needs.Add(need);
+            _context.Gives.Add(give);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetNeed", new { id = need.Id }, need);
+            return CreatedAtAction("GetGive", new { id = give.Id }, give);
         }
 
-        // DELETE: api/Needs/5
+        // DELETE: api/Gives/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteNeed(long id)
+        public async Task<IActionResult> DeleteGive(long id)
         {
-            var need = await _context.Needs.FindAsync(id);
-            if (need == null)
+            var give = await _context.Gives.FindAsync(id);
+            if (give == null)
             {
                 return NotFound();
             }
 
-            _context.Needs.Remove(need);
+            _context.Gives.Remove(give);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool NeedExists(long id)
+        private bool GiveExists(long id)
         {
-            return _context.Needs.Any(e => e.Id == id);
+            return _context.Gives.Any(e => e.Id == id);
         }
     }
 }
