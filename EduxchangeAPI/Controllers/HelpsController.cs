@@ -23,20 +23,12 @@ namespace EduxchangeAPI.Controllers
 
         // GET: api/Helps
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Helps>>> GetHelps([FromQuery(Name = "fulfilled")] bool? fulfilled)
+        public async Task<ActionResult<IEnumerable<Helps>>> GetHelps()
         {
-            if (fulfilled != null)
-            {
-                return await _context.Helps
-                    .Where(n => n.Fulfilled == fulfilled)
-                    .Include(n => n.Need)
-                    .Include(n => n.Individual)
-                    .ToListAsync();
-            }
 
             return await _context.Helps
-                .Include(n => n.IndividaulID)
-                .Include(n => n.NeedID)
+                .Include(n => n.Need)
+                .Include(n => n.Individual)
                 .ToListAsync();
         }
 
@@ -47,8 +39,7 @@ namespace EduxchangeAPI.Controllers
             var help = await _context.Helps
                 .Include(g => g.Need)
                 .Include(g => g.Individual)
-                .FirstOrDefaultAsync(g => g.IndividualID == individualid)
-                .FirstOrDefaultAsync(g => g.NeedID == needid);
+                .FirstOrDefaultAsync(g => g.IndividualID == individualid && g.NeedID == needid);
 
             if (help == null)
             {
@@ -118,7 +109,7 @@ namespace EduxchangeAPI.Controllers
 
         private bool HelpsExists(string individualid, long needid)
         {
-            return _context.Helps.Any(e => e.IndividualID == individualid & e.NeedID == individualid);
+            return _context.Helps.Any(e => e.IndividualID == individualid & e.NeedID == needid);
         }
     }
 }
