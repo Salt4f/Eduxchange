@@ -9,7 +9,12 @@ namespace EduxchangeAPI.Models
 {
     public enum Tags
     {
-
+        Elementary,
+        HighSchool,
+        Books,
+        Material,
+        Clothes,
+        Hardware
     }
 
     public class Publication
