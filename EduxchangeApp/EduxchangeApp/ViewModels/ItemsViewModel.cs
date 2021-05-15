@@ -14,10 +14,9 @@ namespace EduxchangeApp.ViewModels
         private Publication _selectedPublication;
 
         public ObservableCollection<Publication> Publications { get; }
-        public Command LoadItemsCommand { get; }
         public Command LoadNeedsCommand { get; }
         public Command LoadGivesCommand { get; }
-        public Command AddItemCommand { get; }
+        public Command AddPublicationCommand { get; }
         public Command<Publication> PublicationTapped { get; }
 
         public ItemsViewModel()
@@ -25,20 +24,22 @@ namespace EduxchangeApp.ViewModels
             Title = "Browse";
             Publications = new ObservableCollection<Publication>();
 
-            LoadGivesCommand = new Command(async () => await ExecuteLoadGivesCommand());
-            LoadNeedsCommand = new Command(async () => await ExecuteLoadNeedsCommand());
-
             PublicationTapped = new Command<Publication>(OnPublicationSelected);
 
-            AddItemCommand = new Command(OnAddItem);
+            AddPublicationCommand = new Command(OnAddPublication);
 
+            var u = new Individual()
+            {
+                Name="Sergio", Email="sergio.camps@gmail.com"
+            };
+            var g = new Give { Author=u, Title = "Libro Ot el bruixot", Description = "This is an item description.", Deadline = new DateTime(2021, 11, 20) };
+
+            Task.Run(async() => await DataStoreGive.AddItemAsync(g));
         }
 
         async Task ExecuteLoadNeedsCommand()
         {
             IsBusy = true;
-
-            System.Console.WriteLine("NEEDS");
 
             try
             {
@@ -62,7 +63,7 @@ namespace EduxchangeApp.ViewModels
         async Task ExecuteLoadGivesCommand()
         {
             IsBusy = true;
-            System.Console.WriteLine("GIVES");
+
             try
             {
                 Publications.Clear();
@@ -98,7 +99,7 @@ namespace EduxchangeApp.ViewModels
             }
         }
 
-        private async void OnAddItem(object obj)
+        private async void OnAddPublication(object obj)
         {
             await Shell.Current.GoToAsync(nameof(NewItemPage));
         }
@@ -112,8 +113,10 @@ namespace EduxchangeApp.ViewModels
             await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ItemId)}={publication.Id}");
         }
 
-        public ICommand LoadGivePublications { get; }
+        //public ICommand LoadGivePublications { get; }
 
-        public ICommand LoadNeedPublications { get; }
+        public ICommand LoadGivePublications => new Command(async () => await ExecuteLoadGivesCommand());
+
+        public ICommand LoadNeedPublications => new Command(async () => await ExecuteLoadNeedsCommand());
     }
 }

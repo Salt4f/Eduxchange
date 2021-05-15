@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EduxchangeApp.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace EduxchangeApp.Services
 {
@@ -15,16 +16,37 @@ namespace EduxchangeApp.Services
 
         private static readonly string queryBase = "http://edu.vgafib.org/api/Gives";
 
+        private HashSet<Give> gives;
+
         public GiveDataStore()
         {
             _client = HttpClientProvider.GetHttpClient();
             //_json = JsonSerializer.CreateDefault();
+
+            gives = new HashSet<Give>();
         }
 
         public async Task<bool> AddItemAsync(Give item)
         {
-            string json = JsonConvert.SerializeObject(item);
-            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+            //string json = JsonConvert.SerializeObject(item);
+            var json = new JObject();
+
+            json.Add("Title", item.Title);
+            json.Add("Description", item.Description);
+            json.Add("Amount", item.Amount);
+            json.Add("Author", item.Author.Email);
+            json.Add("Beneficiary", item.Beneficiary.Email);
+            json.Add("Deadline", item.Deadline);
+            json.Add("Fulfilled", item.Fulfilled);
+            json.Add("Photo", item.Photo);
+            var tags = new JArray();
+            foreach (var tag in item.Tags)
+            {
+                tags.Add(tag);
+            }
+            json.Add("Tags", tags);
+
+            StringContent content = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
 
             var response = await _client.PostAsync(queryBase, content);
 
