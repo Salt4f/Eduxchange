@@ -9,7 +9,7 @@ namespace EduxchangeApp.Services
 {
     public class MockDataStoreGive : IDataStore<Give>
     {
-        readonly List<Give> gives;
+        private List<Give> gives;
 
         public MockDataStoreGive()
         {
@@ -17,12 +17,11 @@ namespace EduxchangeApp.Services
 
             gives = new List<Give>()
             {
-                new Give { Author = author, Id = 1, Amount = 1, Title = "First item", Description="This is an item description.", Deadline=DateTime.MinValue },
-                new Give { Author = author, Id = 2, Amount = 10, Title = "Second item", Description="This is an item description.", Deadline=new DateTime(2021, 11, 20) },
-                new Give { Author = author, Id = 3, Amount = 5, Title = "Third item", Description="This is an item description.", Deadline=new DateTime(2022, 5, 20) },
-                new Give { Author = author, Id = 4, Amount = 70, Title = "Fourth item", Description="This is an item description.", Deadline=new DateTime(2021, 7, 5) },
-                new Give { Author = author, Id = 5, Amount = 15, Title = "Fifth item", Description="This is an item description.", Deadline=new DateTime(2021, 6, 12) },
-                new Give { Author = author, Id = 6, Amount = 2, Title = "Sixth item", Description="This is an item description.", Deadline=new DateTime(2019, 8, 8) }
+                new Give { Author = new School() { Name = "Maragall", Email = "maragall@exemple.cat"}, Id = 1, Amount = 1, Title = "Projector", Description="Proporciona suport audiovisual.", Deadline=new DateTime(2022, 1, 20)  },
+                new Give { Author = new School() { Name = "Maragall", Email = "maragall@exemple.cat"}, Id = 2, Amount = 10, Title = "Llibres matemàtics", Description="Suport matemàtic de nivell escolar.", Deadline=new DateTime(2021, 11, 2) },
+                new Give { Author = new Individual() { Name = "Pere", Email = "pere@exemple.cat"}, Id = 4, Amount = 70, Title = "Guixos", Description="Guixos per escriure a la pissarra(diferents colors).", Deadline=new DateTime(2021, 7, 5) },
+                new Give { Author = new Individual() { Name = "Martí", Email = "marti@exemple.cat"}, Id = 5, Amount = 15, Title = "Esborradors", Description="Per esborrar el que hi hagi escrit a la pissarra.", Deadline=new DateTime(2021, 6, 12) },
+                new Give { Author = new School() { Name = "Maragall", Email = "maragall@exemple.cat"}, Id = 6, Amount = 2, Title = "Altaveus", Description="Suport d'audio per fer ús docent.", Deadline=new DateTime(2019, 8, 8) }
             };
         }
 
