@@ -13,7 +13,7 @@ namespace EduxchangeApp
         {
             InitializeComponent();
             DependencyService.Register<MockDataStoreGive>();
-            DependencyService.Register<NeedDataStore>();
+            DependencyService.Register<MockDataStoreNeed>();
             MainPage = new AppShell();
         }
 
