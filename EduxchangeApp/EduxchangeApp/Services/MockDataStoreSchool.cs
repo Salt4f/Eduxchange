@@ -17,12 +17,12 @@ namespace EduxchangeApp.Services
 
             gives = new List<Give>()
             {
-                new Give { Author = author, Id = 1, Amount = 1, Title = "First item", Description="This is an item description.", Deadline=DateTime.MinValue },
-                new Give { Author = author, Id = 2, Amount = 10, Title = "Second item", Description="This is an item description.", Deadline=new DateTime(2021, 11, 20) },
-                new Give { Author = author, Id = 3, Amount = 5, Title = "Third item", Description="This is an item description.", Deadline=new DateTime(2022, 5, 20) },
-                new Give { Author = author, Id = 4, Amount = 70, Title = "Fourth item", Description="This is an item description.", Deadline=new DateTime(2021, 7, 5) },
-                new Give { Author = author, Id = 5, Amount = 15, Title = "Fifth item", Description="This is an item description.", Deadline=new DateTime(2021, 6, 12) },
-                new Give { Author = author, Id = 6, Amount = 2, Title = "Sixth item", Description="This is an item description.", Deadline=new DateTime(2019, 8, 8) }
+                new Give { Author = author, Id = "1", Amount = 1, Title = "First item", Description="This is an item description.", Deadline=DateTime.MinValue },
+                new Give { Author = author, Id = "2", Amount = 10, Title = "Second item", Description="This is an item description.", Deadline=new DateTime(2021, 11, 20) },
+                new Give { Author = author, Id = "3", Amount = 5, Title = "Third item", Description="This is an item description.", Deadline=new DateTime(2022, 5, 20) },
+                new Give { Author = author, Id = "4", Amount = 70, Title = "Fourth item", Description="This is an item description.", Deadline=new DateTime(2021, 7, 5) },
+                new Give { Author = author, Id = "5", Amount = 15, Title = "Fifth item", Description="This is an item description.", Deadline=new DateTime(2021, 6, 12) },
+                new Give { Author = author, Id = "6", Amount = 2, Title = "Sixth item", Description="This is an item description.", Deadline=new DateTime(2019, 8, 8) }
             };
         }
 

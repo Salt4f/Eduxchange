@@ -2,13 +2,20 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EduxchangeApp.Views.ItemDetailPage"
-             Title="{Binding Title}">
+             Title="{Binding PublicationType}">
 
-    <StackLayout Spacing="20" Padding="15">
-        <Label Text="Title:" FontSize="Medium" />
-        <Label Text="{Binding Title}" FontSize="Small"/>
-        <Label Text="Description:" FontSize="Medium" />
-        <Label Text="{Binding Description}" FontSize="Small"/>
-    </StackLayout>
-    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="8*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Margin="10" Text="{Binding Title}" FontSize="Title"/>
+
+        <Label Grid.Row="1" Margin="10" Text="{Binding Description}" FontSize="Medium"/>
+
+        <Button Grid.Row="2" Text="Request/Help" VerticalOptions="End"/>
+    </Grid>
+
 </ContentPage>

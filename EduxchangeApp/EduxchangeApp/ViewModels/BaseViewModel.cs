@@ -13,6 +13,8 @@ namespace EduxchangeApp.ViewModels
         public IDataStore<Give> DataStoreGive => DependencyService.Get<IDataStore<Give>>();
         public IDataStore<Need> DataStoreNeed => DependencyService.Get<IDataStore<Need>>();
 
+        public IDataStore<Publication> DataStorePublication => DependencyService.Get<IDataStore<Publication>>();
+
         bool isBusy = false;
         public bool IsBusy
         {

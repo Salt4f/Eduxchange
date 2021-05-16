@@ -27,14 +27,6 @@ namespace EduxchangeApp.ViewModels
             PublicationTapped = new Command<Publication>(OnPublicationSelected);
 
             AddPublicationCommand = new Command(OnAddPublication);
-
-            var u = new Individual()
-            {
-                Name="Sergio", Email="sergio.camps@gmail.com"
-            };
-            var g = new Give { Author=u, Title = "Libro Ot el bruixot", Description = "This is an item description.", Deadline = new DateTime(2021, 11, 20) };
-
-            Task.Run(async() => await DataStoreGive.AddItemAsync(g));
         }
 
         async Task ExecuteLoadNeedsCommand()
@@ -109,8 +101,9 @@ namespace EduxchangeApp.ViewModels
             if (publication == null)
                 return;
 
+            Debug.WriteLine(publication.Title);
             // This will push the ItemDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ItemId)}={publication.Id}");
+            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.PublicationId)}={publication.Id}");
         }
 
         public ICommand LoadGivePublications => new Command(async () => await ExecuteLoadGivesCommand());

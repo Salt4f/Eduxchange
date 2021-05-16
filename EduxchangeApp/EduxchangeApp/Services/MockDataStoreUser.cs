@@ -22,12 +22,12 @@ namespace EduxchangeApp.Services
 
             gives = new List<Need>()
             {
-                new Need { Author = author, Id = 1, AmountNeeded = 1, ValuePerProduct = 2, AmountProduct = 1, Fulfilled = true, Title = "First item", Description="This is an item description.", Deadline=DateTime.MinValue },
-                new Need { Author = author, Id = 2, AmountNeeded = 10, ValuePerProduct = 2, AmountProduct = 1, AmountCash = 2, Title = "Second item", Description="This is an item description.", Deadline=new DateTime(2021, 11, 20) },
-                new Need { Author = author, Id = 3, AmountNeeded = 5, Title = "Third item", Description="This is an item description.", Deadline=new DateTime(2022, 5, 20) },
-                new Need { Author = author, Id = 4, AmountNeeded = 70, Title = "Fourth item", Description="This is an item description.", Deadline=new DateTime(2021, 7, 5) },
-                new Need { Author = author, Id = 5, AmountNeeded = 15, Title = "Fifth item", Description="This is an item description.", Deadline=new DateTime(2021, 6, 12) },
-                new Need { Author = author, Id = 6, AmountNeeded = 2, Title = "Sixth item", Description="This is an item description.", Deadline=new DateTime(2019, 8, 8) }
+                new Need { Author = author, Id = "1", AmountNeeded = 1, ValuePerProduct = 2, AmountProduct = 1, Fulfilled = true, Title = "First item", Description="This is an item description.", Deadline=DateTime.MinValue },
+                new Need { Author = author, Id = "2", AmountNeeded = 10, ValuePerProduct = 2, AmountProduct = 1, AmountCash = 2, Title = "Second item", Description="This is an item description.", Deadline=new DateTime(2021, 11, 20) },
+                new Need { Author = author, Id = "3", AmountNeeded = 5, Title = "Third item", Description="This is an item description.", Deadline=new DateTime(2022, 5, 20) },
+                new Need { Author = author, Id = "4", AmountNeeded = 70, Title = "Fourth item", Description="This is an item description.", Deadline=new DateTime(2021, 7, 5) },
+                new Need { Author = author, Id = "5", AmountNeeded = 15, Title = "Fifth item", Description="This is an item description.", Deadline=new DateTime(2021, 6, 12) },
+                new Need { Author = author, Id = "6", AmountNeeded = 2, Title = "Sixth item", Description="This is an item description.", Deadline=new DateTime(2019, 8, 8) }
             };
         }
 
