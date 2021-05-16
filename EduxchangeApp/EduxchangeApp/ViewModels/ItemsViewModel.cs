@@ -113,8 +113,6 @@ namespace EduxchangeApp.ViewModels
             await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ItemId)}={publication.Id}");
         }
 
-        //public ICommand LoadGivePublications { get; }
-
         public ICommand LoadGivePublications => new Command(async () => await ExecuteLoadGivesCommand());
 
         public ICommand LoadNeedPublications => new Command(async () => await ExecuteLoadNeedsCommand());
