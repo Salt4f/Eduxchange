@@ -17,12 +17,10 @@ namespace EduxchangeApp.Services
 
             needs = new List<Need>()
             {
-                new Need { Author = author, Id = 1, AmountNeeded = 1, Title = "First item", Description="This is an item description.", Deadline=DateTime.MinValue },
-                new Need { Author = author, Id = 2, AmountNeeded = 10, Title = "Second item", Description="This is an item description.", Deadline=new DateTime(2021, 11, 20) },
-                new Need { Author = author, Id = 3, AmountNeeded = 5, Title = "Third item", Description="This is an item description.", Deadline=new DateTime(2022, 5, 20) },
-                new Need { Author = author, Id = 4, AmountNeeded = 70, Title = "Fourth item", Description="This is an item description.", Deadline=new DateTime(2021, 7, 5) },
-                new Need { Author = author, Id = 5, AmountNeeded = 15, Title = "Fifth item", Description="This is an item description.", Deadline=new DateTime(2021, 6, 12) },
-                new Need { Author = author, Id = 6, AmountNeeded = 2, Title = "Sixth item", Description="This is an item description.", Deadline=new DateTime(2019, 8, 8) }
+                new Need {Id = 7, Title = "Bolígrafs", Description="Bolígrafs blaus per escriute.", Deadline=new DateTime(2023, 7, 25), Fulfilled = true, AmountNeeded = 100 , AmountProduct = 50 , AmountCash = 80 , Author = new School() { Name = "Maragall", Email = "maragall@exemple.cat"}},
+                new Need {Id = 8, Title = "Llibres de català", Description="Suport de Català.", Deadline=new DateTime(2021, 4, 5), Fulfilled = true, AmountNeeded = 20 , AmountProduct = 14 , AmountCash = 45 , Author = new School() { Name = "Maragall", Email = "maragall@exemple.cat"}},
+                new Need {Id = 9,  Title = "DinA4", Description="Fulls en blanc per escriure.", Deadline=new DateTime(2022, 9, 8), Fulfilled = false, AmountNeeded = 400 , AmountProduct = 100 , AmountCash = 70 , Author = new School() { Name = "Escola Pia", Email = "pia@exemple.cat"}},
+                new Need {Id = 10,  Title = "Atlas", Description="Material docent.", Deadline=new DateTime(2020, 6, 5), Fulfilled = true, AmountNeeded = 20 , AmountProduct = 20 , AmountCash = 60 , Author = new School() { Name = "Escola Pia", Email = "pia@exemple.cat"}}
             };
         }
 
