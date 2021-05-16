@@ -8,52 +8,60 @@
              x:Name="BrowseItemsPage">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add" Command="{Binding AddItemCommand}" />
+        <ToolbarItem Text="Add" Command="{Binding AddPublicationCommand}" />
     </ContentPage.ToolbarItems>
     <!--
       x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
       https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
     -->
-    <Grid>
+    <Grid RowSpacing="0" ColumnSpacing="0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
             <RowDefinition Height="11*" />
         </Grid.RowDefinitions>
-        <Button
-            Text="Give" 
-            Grid.Row="0"/>
+        <Grid ColumnSpacing="0" RowSpacing="0" Grid.Row="0">
+            <Button 
+                Text="Give"
+                Command="{Binding LoadGivePublications}"
+                Grid.Column="0"/>
+            <Button 
+                Text="Need"
+                Command="{Binding LoadNeedPublications}"
+                Grid.Column="1"/>
+        </Grid>
 
-        <Button
-            Text="Need"
-            Grid.Row="1"/>
-            <!--
-        <RefreshView x:DataType="local:ItemsViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <RefreshView x:DataType="local:ItemsViewModel" Command="{Binding LoadGivePublications}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}" Grid.Row="1">
             <CollectionView x:Name="ItemsListView"
-                    ItemsSource="{Binding Items}"
-                    SelectionMode="None">
+                    ItemsSource="{Binding Publications}"
+                    SelectionMode="None" Margin="10">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout Padding="10" x:DataType="model:Item">
-                            <Label Text="{Binding Text}" 
-                                LineBreakMode="NoWrap" 
-                                Style="{DynamicResource ListItemTextStyle}" 
-                                FontSize="16" />
-                            <Label Text="{Binding Description}" 
-                                LineBreakMode="NoWrap"
-                                Style="{DynamicResource ListItemDetailTextStyle}"
-                                FontSize="13" />
-                            <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer 
-                                    NumberOfTapsRequired="1"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=ItemTapped}"		
-                                    CommandParameter="{Binding .}">
-                                </TapGestureRecognizer>
-                            </StackLayout.GestureRecognizers>
-                        </StackLayout>
+                        <Frame
+                            BorderColor="LightSkyBlue"
+                            CornerRadius="10"
+                            HasShadow="True"
+                            Padding="10">
+                            <StackLayout Padding="5" Spacing="20" x:DataType="model:Publication">
+                                <Label Text="{Binding Title}" 
+                                    LineBreakMode="NoWrap" 
+                                    Style="{DynamicResource ListItemTextStyle}" 
+                                    FontSize="16" />
+                                <Label Text="{Binding Description}" 
+                                    LineBreakMode="NoWrap"
+                                    Style="{DynamicResource ListItemDetailTextStyle}"
+                                    FontSize="13" />
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        NumberOfTapsRequired="1"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=PublicationTapped}"		
+                                        CommandParameter="{Binding .}">
+                                    </TapGestureRecognizer>
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </RefreshView>
-        -->
     </Grid>
 </ContentPage>

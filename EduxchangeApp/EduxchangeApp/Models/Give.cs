@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EduxchangeApp.Models
 {
-    public class Give
+    public class Give : Publication
     {
         public int Amount { get; set; }
 

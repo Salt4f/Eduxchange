@@ -17,9 +17,6 @@ namespace EduxchangeApp.Models
 
         public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 
-        public ICollection<Give> Gives
-        {
-            get; set;
-        }
+        public ICollection<Give> Gives { get; set; }
     }
 }

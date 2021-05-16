@@ -4,41 +4,65 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace EduxchangeApp.ViewModels
 {
     public class ItemsViewModel : BaseViewModel
     {
-        private Item _selectedItem;
+        private Publication _selectedPublication;
 
-        public ObservableCollection<Item> Items { get; }
-        public Command LoadItemsCommand { get; }
-        public Command AddItemCommand { get; }
-        public Command<Item> ItemTapped { get; }
+        public ObservableCollection<Publication> Publications { get; }
+        public Command LoadNeedsCommand { get; }
+        public Command LoadGivesCommand { get; }
+        public Command AddPublicationCommand { get; }
+        public Command<Publication> PublicationTapped { get; }
 
         public ItemsViewModel()
         {
             Title = "Browse";
-            Items = new ObservableCollection<Item>();
-            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+            Publications = new ObservableCollection<Publication>();
 
-            ItemTapped = new Command<Item>(OnItemSelected);
+            PublicationTapped = new Command<Publication>(OnPublicationSelected);
 
-            AddItemCommand = new Command(OnAddItem);
+            AddPublicationCommand = new Command(OnAddPublication);
         }
 
-        async Task ExecuteLoadItemsCommand()
+        async Task ExecuteLoadNeedsCommand()
         {
             IsBusy = true;
 
             try
             {
-                Items.Clear();
-                var items = await DataStore.GetItemsAsync(true);
-                foreach (var item in items)
+                Publications.Clear();
+                var publications = await DataStoreNeed.GetItemsAsync(true);
+                foreach (var publication in publications)
                 {
-                    Items.Add(item);
+                    Publications.Add(publication);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        async Task ExecuteLoadGivesCommand()
+        {
+            IsBusy = true;
+
+            try
+            {
+                Publications.Clear();
+                var publications = await DataStoreGive.GetItemsAsync(true);
+                foreach (var publication in publications)
+                {
+                    Publications.Add(publication);
                 }
             }
             catch (Exception ex)
@@ -54,31 +78,36 @@ namespace EduxchangeApp.ViewModels
         public void OnAppearing()
         {
             IsBusy = true;
-            SelectedItem = null;
+            SelectedPublication = null;
         }
 
-        public Item SelectedItem
+        public Publication SelectedPublication
         {
-            get => _selectedItem;
+            get => _selectedPublication;
             set
             {
-                SetProperty(ref _selectedItem, value);
-                OnItemSelected(value);
+                SetProperty(ref _selectedPublication, value);
+                OnPublicationSelected(value);
             }
         }
 
-        private async void OnAddItem(object obj)
+        private async void OnAddPublication(object obj)
         {
             await Shell.Current.GoToAsync(nameof(NewItemPage));
         }
 
-        async void OnItemSelected(Item item)
+        async void OnPublicationSelected(Publication publication)
         {
-            if (item == null)
+            if (publication == null)
                 return;
 
+            Debug.WriteLine(publication.Title);
             // This will push the ItemDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ItemId)}={item.Id}");
+            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.PublicationId)}={publication.Id}");
         }
+
+        public ICommand LoadGivePublications => new Command(async () => await ExecuteLoadGivesCommand());
+
+        public ICommand LoadNeedPublications => new Command(async () => await ExecuteLoadNeedsCommand());
     }
 }
